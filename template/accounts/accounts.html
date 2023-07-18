@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block TITLE %}
+کاربران
+{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'assets/css/accounts/accounts.css' %}">
+{% endblock %}
+{% block CONTENT %}
+<table class="table table-striped text-center">
+    <tr>
+        <th>نام و نام خانوادگی</th>
+        <th>شماره تماس</th>
+        <th>پست الکترونیک</th>
+        <th>وضعیت</th>
+        <th>نقش کاربر</th>
+        <th>ارتباط مستقیم</th>
+    </tr>
+    <tr>
+        <td>فرید غنی زاده</td>
+        <td>09121571187</td>
+        <td>frdghani@gmail.com</td>
+        <td>آنلاین</td>
+        <td>مدیریت</td>
+        <td><i class="bi bi-chat-right-dots sip"></i></td>
+    </tr>
+    <tr>
+        <td>فرید غنی زاده</td>
+        <td>09121571187</td>
+        <td>frdghani@gmail.com</td>
+        <td>آفلاین</td>
+        <td>انبار دار</td>
+        <td><i class="bi bi-chat-right-dots sip "></i></td>
+    </tr>
+    <tr>
+        <td>فرید غنی زاده</td>
+        <td>09121571187</td>
+        <td>frdghani@gmail.com</td>
+        <td>آفلاین</td>
+        <td>حسابدار</td>
+        <td><i class="bi bi-chat-right-dots sip"></i></td>
+    </tr>
+    <tr>
+        <td>فرید غنی زاده</td>
+        <td>09121571187</td>
+        <td>frdghani@gmail.com</td>
+        <td>آفلاین</td>
+        <td>توسعه دهنده</td>
+        <td><i class="bi bi-chat-right-dots sip"></i></td>
+    </tr>
+</table>
+{% endblock %}

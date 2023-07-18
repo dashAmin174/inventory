@@ -1,23 +1,5 @@
-from pathlib import Path
-import os
+from .local import *
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-SECRET_KEY = "django-insecure-cnvj_6xqst#5dhxc1-3^cm06kd7ap81&wr8s@_#)jvju(k6w9v"
-
-AUTH_USER_MODEL = "account.user_accounts"
-
-AUTH_USER_MODEL_USER_PERMISSIONS_RELATIONSHIP = "custom_user_permissions"
-
-AUTHENTICATIONS_BACKENDS = [
-    "account.backend.Authenticate",
-]
-
-DEBUG = True
-
-ALLOWED_HOSTS = ['127.0.0.1','localhost']
-
-CSRF_TRUSTED_ORIGINS = ["https://dashamin174-jubilant-space-spork-pjprv55gr4gf7q4x-8000.preview.app.github.dev"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -26,8 +8,38 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'rest_framework',
+    "dashboard",
     "account",
     "inventory",
+]
+
+# LOGIN REDIRECT URL
+LOGIN_REDIRECT_URL = '/'
+
+
+AUTHENTICATION_BACKENDS = [
+    'account.backend.EmailPhoneCodeMelliBackend',
+]
+
+# REST FRAMEWORK CONF
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+}
+
+AUTH_USER_MODEL = "account.user_accounts"
+
+AUTH_USER_MODEL_USER_PERMISSIONS_RELATIONSHIP = "custom_user_permissions"
+
+AUTHENTICATIONS_BACKENDS = [
+    "account.backend.Authenticate",
 ]
 
 MIDDLEWARE = [
@@ -60,13 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "root.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -91,7 +96,5 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

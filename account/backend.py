@@ -1,19 +1,18 @@
-from django.contrib.auth.hashers import check_password
 from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth import get_user_model
-from django.contrib.auth import authenticate
+from .models import user_accounts
 from django.db.models import Q
-from typing import Optional
 
-
-class Authenticate(ModelBackend):
-    def authenticate(self, request, username=None, password=None, **kwargs) -> Optional[get_user_model()]:
-        UserModel = get_user_model()
+class EmailPhoneCodeMelliBackend(ModelBackend):
+    def authenticate(self, request, username=None, codeMelli=None, password=None, **kwargs):
         try:
-            user = UserModel.objects.get(Q(username=username) | Q(email=username))
-        except UserModel.DoesNotExist:
-            return None
-        else:
+            user = user_accounts.objects.get(Q(email=username) | Q(codeMelli=codeMelli))
             if user.check_password(password):
                 return user
-        return None
+        except user_accounts.DoesNotExist:
+            return None
+
+    def get_user(self, user_id):
+        try:
+            return user_accounts.objects.get(pk=user_id)
+        except user_accounts.DoesNotExist:
+            return None

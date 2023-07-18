@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 
 
-CSRF_TRUSTED_ORIGINS = ["https://dashamin174-jubilant-space-spork-pjprv55gr4gf7q4x-8000.preview.app.github.dev"]
+CSRF_TRUSTED_ORIGINS = ["https://dashamin174-jubilant-space-spork-pjprv55gr4gf7q4x-8003.preview.app.github.dev"]
 
 SECRET_KEY = "django-insecure-cnvj_6xqst#5dhxc1-3^cm06kd7ap81&wr8s@_#)jvju(k6w9v"
 

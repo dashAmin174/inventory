@@ -1,11 +1,19 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
+from django.contrib.auth import logout
 from django.contrib.auth import login
 from django.contrib import messages
 from .models import user_accounts
 from django.views import View
 from .forms import LoginForm
 
+
+def accountsView(request):
+    return render(request, "accounts/accounts.html")
+
+def logout_view(request):
+    logout(request)
+    return redirect(loginView)
 
 def loginView(request):
     if request.method == 'POST':

@@ -44,24 +44,26 @@ integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUU
     <span></span> <span></span> <span></span> <span></span> <span></span>
 
     <div class="signin">
-
         <div class="content">
             <form method="post">
                 {% csrf_token %}
-            <h2>وارد انبار شوید</h2>
-
             <div class="form">
-                {{login.as_p}}
-
+                <h2>وارد انبار شوید</h2>
+                <div class="inputBox">
+                    <input name="username" type="email" required> <i class="tar">ایمیل خود را وارد کنید</i>
+                </div>
+                <div class="inputBox">
+                    <input name="codeMelli" type="number" required> <i class="tar">کدملی خود را وارد کنید</i>
+                </div>
+                <div class="inputBox">
+                    <input name="password" type="password" required> <i>رمزعبور خود را وارید کنید</i>
+                </div>
                 <div class="inputBox">
                     <input type="submit" value="ورود">
                 </div>
-
             </div>
             </form>
         </div>
-
     </div>
-
 </section>
 {% endblock %}

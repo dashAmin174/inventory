@@ -16,37 +16,16 @@
         <th>نقش کاربر</th>
         <th>ارتباط مستقیم</th>
     </tr>
+<!--ACCOUNTS LIST-->
+    {% for user in accounts %}
     <tr>
-        <td>فرید غنی زاده</td>
-        <td>09121571187</td>
-        <td>frdghani@gmail.com</td>
-        <td>آنلاین</td>
-        <td>مدیریت</td>
+        <td>{{ user.first_name }} {{ user.last_name }}</td>
+        <td>{{ user.phoneNumber }}</td>
+        <td>{{ user.email }}</td>
+        <td>{% if user.status %}آنلاین{% else %}آفلاین{% endif %}</td>
+        <td>{% if user.is_staff %}توسعه دهنده{% elif user.is_superuser %}مدیریت{% elif user.is_inventor %}انباردار{% elif user.is_calculator %}حسابدار{% else %}تعریف نشده{% endif %}</td>
         <td><i class="bi bi-chat-right-dots sip"></i></td>
     </tr>
-    <tr>
-        <td>فرید غنی زاده</td>
-        <td>09121571187</td>
-        <td>frdghani@gmail.com</td>
-        <td>آفلاین</td>
-        <td>انبار دار</td>
-        <td><i class="bi bi-chat-right-dots sip "></i></td>
-    </tr>
-    <tr>
-        <td>فرید غنی زاده</td>
-        <td>09121571187</td>
-        <td>frdghani@gmail.com</td>
-        <td>آفلاین</td>
-        <td>حسابدار</td>
-        <td><i class="bi bi-chat-right-dots sip"></i></td>
-    </tr>
-    <tr>
-        <td>فرید غنی زاده</td>
-        <td>09121571187</td>
-        <td>frdghani@gmail.com</td>
-        <td>آفلاین</td>
-        <td>توسعه دهنده</td>
-        <td><i class="bi bi-chat-right-dots sip"></i></td>
-    </tr>
+    {% endfor %}
 </table>
 {% endblock %}

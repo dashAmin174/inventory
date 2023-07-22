@@ -4,7 +4,9 @@
     --betc: rgb(28, 51, 255);
     --bebc: rgb(28, 51, 255);
 }
-
+.bodyx {
+ width: 1200px;
+}
 body {
     background-color: rgb(54, 54, 54);
 }

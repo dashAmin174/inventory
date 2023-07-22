@@ -6,24 +6,21 @@ a{
 }
 .menubar {
     background-color: var(--bktc) !important;
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-    margin-bottom: 90px;
-}
+    padding: 20px;}
 
 .menubar input {
     background-color: rgb(70, 70, 70);
     color: white;
     border: none;
+    width: 80%;
+
 }
 
 .menubar button {
     background-color: rgb(255, 255, 255);
     color: rgb(70, 70, 70);
     border: none;
+
 
 }
 

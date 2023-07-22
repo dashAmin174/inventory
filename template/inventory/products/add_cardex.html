@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block TITLE %}
+<title>افزودن کالا</title>
+{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'assets/css/inventory/products/add_products.css' %}">
+{% endblock %}
+{% block CONTENT %}
+<input type="hidden" name="CODE" value="{{code}}">
+<div class="container-fluid cardexbody">
+    <!-- -------کاردکس------ -->
+    <div class="container-fluid"><br>
+        <div class="text-center mb-1">
+            <button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button>
+            <button type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button>
+        </div>
+        <div class="cardex" id="cardexprint">
+            
+            <div class="h-cardex">کاردکس کالا</div>
+            <span>نام کالا : کیف رودوشی</span>
+            <span>کد کالا : FCLC8022</span>
+            <span>رنگ کالا : مشکی</span>
+            <span>نام انبار : اخلاقی</span>
+            <span>محل کالا : سالن یک</span>
+            <span>واحد شمارش : عدد</span>
+            <hr>
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ردیف</th>
+                        <th>تاریخ</th>
+                        <th>شماره حواله/فاکتور</th>
+                        <th>شرح اقدامات</th>
+                        <th>ورودی</th>
+                        <th>خروجی</th>
+                        <th>موجودی</th>
+                        <th>اقدام کننده</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1401/04/23</td>
+                        <td>فاکتور 20987</td>
+                        <td>خرید از انبار اکبری برای سایت</td>
+                        <td>250</td>
+                        <td>0</td>
+                        <td>250</td>
+                        <td>فرید غنی زاده</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>1401/04/23</td>
+                        <td>فاکتور 20987</td>
+                        <td>خرید از انبار اکبری برای سایت</td>
+                        <td>0</td>
+                        <td>50</td>
+                        <td>200</td>
+                        <td>فرید غنی زاده</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div><br>
+
+    </div>
+
+    <!-- ----------------- -->
+    <!-- فیلد هایی که باید توسط انبار دار پر شود -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <div>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="نام محصول"
+                            aria-label="default input example" required>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="کد محصول"
+                            aria-label="default input example" required>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="رنگ محصول"
+                            aria-label="default input example" required>
+                    </div><br>
+                    <div class="col-12">
+                        <select class="form-select" aria-label="Default select example" required>
+                            <option selected>انتخاب محل انبار</option>
+                            <option value="1">انبار اخلاقی</option>
+                            <option value="2">انبار پلاک سه</option>
+                        </select>
+                    </div><br>
+                    <div class="col-12">
+                        <select class="form-select" aria-label="Default select example" required>
+                            <option selected>انتخاب سالن انبار</option>
+                            <option value="1">سالن یک</option>
+                            <option value="2">سالن دو</option>
+                        </select>
+                    </div><br>
+                    <div class="col-12">
+                        <select class="form-select" aria-label="Default select example" required>
+                            <option selected>انتخاب واحد شمارش</option>
+                            <option value="1">عدد</option>
+                            <option value="2">متر</option>
+                            <option value="3">سانتیمتر</option>
+                            <option value="4">کیلوگرم</option>
+                            <option value="5">جفت</option>
+                        </select>
+                    </div><br>
+                    <!-- <div class="col-6">
+                <input class="form-control" type="text" placeholder="نام محصول" aria-label="default input example">
+            </div><br> -->
+                    <div class="col-12">
+                        <button class="btn btn-primary do0" type="submit">بروزرسانی کاردکس</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="شماره حواله / فاکتور"
+                            aria-label="default input example" required>
+                    </div><br>
+                    <div class="col-12">
+                        <select class="form-select" aria-label="Default select example" required>
+                            <option selected>انتخاب عملیات</option>
+                            <option value="1">ورودی</option>
+                            <option value="2">خروجی</option>
+                        </select>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="number" placeholder="تعداد"
+                            aria-label="default input example" required>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="شرح اقدامات"
+                            aria-label="default input example" required>
+                    </div><br>
+                    <div class="col-12">
+                        <button class="btn btn-primary do1" type="submit">بروزرسانی عملیات</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% block JS %}
+<script src="{% static 'assets/js/inventory/products/products_cardex.js' %}"></script>
+{% endblock %}
+{% endblock %}

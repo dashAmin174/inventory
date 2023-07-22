@@ -1,8 +1,47 @@
-from .models import Products, Materials, ProductsCardex, MaterialsCardex
+from .serializers import (ProductsSerializer, MaterialsSerializer, ProductsCardexSerializer, MaterialsCardexsSerializer)
+from .models import (Products, Materials, ProductsCardex, MaterialsCardex)
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import generics, filters
 from django.http import JsonResponse
 from django.shortcuts import render
+
+
+''' Create rest api views '''
+class ProductsViewSet(generics.ListCreateAPIView):
+    queryset = Products.objects.all()
+    serializer_class = ProductsSerializer
+    ordering_fields = ['product_author', 'product_name', 'product_code', 'product_color', 'product_quantity', 'product_location', 'product_hall', 'product_unit', 'product_date', 'is_active', 'is_available',]
+    search_fields = ['product_code', 'product_name']
+    
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+
+
+class MaterialsViewSet(generics.ListCreateAPIView):
+    queryset = Materials.objects.all()
+    serializer_class = MaterialsSerializer
+    ordering_fields = ['material_author', 'material_name', 'material_code', 'material_color', 'material_quantity', 'material_location', 'material_hall', 'material_unit', 'material_date', 'is_active', 'is_available',]
+    search_fields = ['material_code', 'material_name']
+    
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+
+
+class ProductsCardexViewSet(generics.ListCreateAPIView):
+    queryset = ProductsCardex.objects.all()
+    serializer_class = ProductsCardexSerializer
+    ordering_fields = ['author', 'product', 'factor_number', 'number', 'description', 'operation', 'date',]
+    search_fields = ['product', 'factor_number',]
+    
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+
+
+class MaterialsCardexsViewSet(generics.ListCreateAPIView):
+    queryset = MaterialsCardex.objects.all()
+    serializer_class = MaterialsCardexsSerializer
+    ordering_fields = ['author', 'material', 'factor_number', 'number', 'description', 'operation', 'date',]
+    search_fields = ['material', 'factor_number',]
+    
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
 
 
 ''' Creare / update inventory '''
@@ -229,7 +268,8 @@ def js_update_materials(request):
 ''' Render pages '''
 @login_required
 def materials(request):
-    return render(request, "inventory/materials/materials.html")
+    materials = Materials.objects.all().order_by('-material_date')
+    return render(request, "inventory/materials/materials.html", {'materials' : materials})
 
 @login_required
 def add_materials(request):
@@ -237,7 +277,8 @@ def add_materials(request):
 
 @login_required
 def products(request):
-    return render(request, "inventory/products/products.html")
+    products = Products.objects.all().order_by('-product_date')
+    return render(request, "inventory/products/products.html", {'products' : products})
 
 @login_required
 def add_products(request):

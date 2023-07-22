@@ -168,6 +168,8 @@ def js_update_products(request):
                                             number = number,
                                             description = description,
                                             operation = operation,
+                                            status = True,
+                                            quantity = product.product_quantity,
                                         )
                                         return JsonResponse({'status': 'کاردکس با موفقیت ایجاد و موجودی به روز شد', 'success': True})
                                     elif operation == "خروجی":
@@ -184,6 +186,8 @@ def js_update_products(request):
                                                 number = number,
                                                 description = description,
                                                 operation = operation,
+                                                status = False,
+                                                quantity = product.product_quantity,
                                             )
                                             return JsonResponse({'status': 'کاردکس با موفقیت ایجاد شد و موجودی به روز شد', 'success': True})
                             else:
@@ -232,6 +236,8 @@ def js_update_materials(request):
                                             number = number,
                                             description = description,
                                             operation = operation,
+                                            status = True,
+                                            quantity = material.material_quantity,
                                         )
                                         return JsonResponse({'status': 'کاردکس با موفقیت ایجاد و موجودی به روز شد', 'success': True})
                                     elif operation == "خروجی":
@@ -248,6 +254,8 @@ def js_update_materials(request):
                                                 number = number,
                                                 description = description,
                                                 operation = operation,
+                                                status = False,
+                                                quantity = material.material_quantity,
                                             )
                                             return JsonResponse({'status': 'کاردکس با موفقیت ایجاد شد و موجودی به روز شد', 'success': True})
                             else:
@@ -288,7 +296,8 @@ def add_products(request):
 def add_products_cardex(request, code):
     product = Products.objects.filter(product_code = code)
     if product.exists():
-        context = {'code' : code}
+        cardex = ProductsCardex.objects.filter(product = code)
+        context = {'code' : code, 'product' : product, 'cardex' : cardex}
         return render(request, "inventory/products/add_cardex.html", context)
     else:
         return render(request, "dashboard/dashboard.html")
@@ -297,7 +306,8 @@ def add_products_cardex(request, code):
 def add_materials_cardex(request, code):
     material = Materials.objects.filter(material_code = code)
     if material.exists():
-        context = {'code' : code}
+        cardex = MaterialsCardex.objects.filter(material = code)
+        context = {'code' : code, 'material' : material, 'cardex' : cardex}
         return render(request, "inventory/materials/add_cardex.html", context)
     else:
         return render(request, "dashboard/dashboard.html")

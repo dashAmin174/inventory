@@ -17,7 +17,7 @@ class Products(models.Model):
     is_available = models.BooleanField(default=True, verbose_name='موجودی / عدم موجودی', blank=False, null=False)
 
     def jpub(self):
-        return jConvert(self.date)
+        return jConvert(self.product_date)
 
     class Meta:
         verbose_name = 'کالا'
@@ -32,6 +32,8 @@ class ProductsCardex(models.Model):
     description = models.CharField(max_length=300, verbose_name='شرح عملیات',null=False, blank=False )
     operation = models.CharField(max_length=20, verbose_name='عملیات',null=False, blank=False )
     date = models.DateTimeField(auto_now_add=True, verbose_name='زمان ثبت', null=True, blank=True)
+    status = models.BooleanField(verbose_name='ورودی / خروجی', blank=True, null=True)
+    quantity = models.PositiveIntegerField(null=True)
 
     def jpub(self):
         return jConvert(self.date)
@@ -56,7 +58,7 @@ class Materials(models.Model):
     is_available = models.BooleanField(default=True, verbose_name='موجودی / عدم موجودی', blank=False, null=False)
 
     def jpub(self):
-        return jConvert(self.date)
+        return jConvert(self.material_date)
 
     class Meta:
         verbose_name = 'ماده اولیه'
@@ -71,6 +73,8 @@ class MaterialsCardex(models.Model):
     description = models.CharField(max_length=300, verbose_name='شرح عملیات',null=False, blank=False )
     operation = models.CharField(max_length=20, verbose_name='عملیات',null=False, blank=False )
     date = models.DateTimeField(auto_now_add=True, verbose_name='زمان ثبت', null=True, blank=True)
+    status = models.BooleanField(verbose_name='ورودی / خروجی', blank=True, null=True)
+    quantity = models.PositiveIntegerField(null=True)
 
     def jpub(self):
         return jConvert(self.date)

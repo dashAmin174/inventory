@@ -37,7 +37,7 @@ class MaterialsViewSet(generics.ListCreateAPIView):
 class ProductsCardexViewSet(generics.ListCreateAPIView):
     queryset = ProductsCardex.objects.all()
     serializer_class = ProductsCardexSerializer
-    ordering_fields = ['author', 'product', 'factor_number', 'number', 'description', 'operation', 'date',]
+    ordering_fields = ['row', 'author', 'product', 'factor_number', 'number', 'description', 'operation', 'date', 'status',]
     search_fields = ['product', 'factor_number',]
     
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
@@ -46,7 +46,7 @@ class ProductsCardexViewSet(generics.ListCreateAPIView):
 class MaterialsCardexsViewSet(generics.ListCreateAPIView):
     queryset = MaterialsCardex.objects.all()
     serializer_class = MaterialsCardexsSerializer
-    ordering_fields = ['author', 'material', 'factor_number', 'number', 'description', 'operation', 'date',]
+    ordering_fields = ['row', 'author', 'material', 'factor_number', 'number', 'description', 'operation', 'date', 'status',]
     search_fields = ['material', 'factor_number',]
     
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
@@ -358,53 +358,18 @@ def material_cardex_export_to_excel(request, code):
 
 @login_required
 def product_cardex_export_to_pdf(request, code):
-    cardex = ProductsCardex.objects.filter(product = code).order_by("date")
-    font_path = os.path.join(os.path.dirname(__file__), os.path.join(BASE_DIR, 'static/assets/fonts/XBNiloofar.ttf'))
-    pdfmetrics.registerFont(TTFont('XB Niloofar', font_path))
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="cardex.pdf"'
-    doc = SimpleDocTemplate(response, pagesize=letter)
-    data = [["ردیف", "تاریخ", "شماره حواله/فاکتور", "شرح اقدامات", "ورودی", "خروجی", "موجودی", "اقدام کننده"]]
-    for detail in cardex:
-        if detail.status:
-            data.append([detail.row, detail.jpub(), detail.factor_number, detail.description, detail.number, "0", detail.quantity, detail.author])
-        else:
-            data.append([detail.row, detail.jpub(), detail.factor_number, detail.description, "0", detail.number, detail.quantity, detail.author])
-    table = Table(data)
-    table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),  # Header row background color
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),  # Header text color
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  # Center alignment for all cells
-        ('FONTNAME', (0, 0), (-1, 0), 'XB Niloofar'),  # Set the font for the header
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),  # Add padding to the header
-        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),  # Row background color
-        ('FONTNAME', (0, 1), (-1, -1), 'XB Niloofar'),  # Set the font for the data rows
-    ]))
-    elements = [table]
-    doc.build(elements)
-    return response
+    product = Products.objects.filter(product_code = code)
+    return render(request, 'utils/print_product.html', context)
+    if product.exists():
+        cardex = ProductsCardex.objects.filter(product = code).order_by("date")
+        context = {'code' : code, 'product': product, 'cardex': cardex}
+        return render(request, "inventory/products/add_cardex.html", context)
+    else:
+        return render(request, "dashboard/dashboard.html")
 
 @login_required
 def material_cardex_export_to_pdf(request, code):
     cardex = MaterialsCardex.objects.filter(material = code).order_by("date")
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="cardex-{code}.pdf"'
-    doc = SimpleDocTemplate(response, pagesize=letter)
-    data = [["ردیف", "تاریخ", "شماره حواله/فاکتور", "شرح اقدامات", "ورودی", "خروجی", "موجودی", "اقدام کننده"]]
-    for detail in cardex:
-        if detail.status:
-            data.append([detail.row, detail.jpub(), detail.factor_number, detail.description, detail.number, "0", detail.quantity, detail.author])
-        else:
-            data.append([detail.row, detail.jpub(), detail.factor_number, detail.description, "0", detail.number, detail.quantity, detail.author])
-    table = Table(data)
-    table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),  # Header row background color
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),  # Header text color
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  # Center alignment for all cells
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),  # Bold font for header
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),  # Add padding to the header
-        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),  # Row background color
-    ]))
-    elements = [table]
-    doc.build(elements)
-    return response
+    material = Materials.objects.filter(material_code = code)
+    context = {'code' : code, 'material': material, 'cardex': cardex}
+    return render(request, 'utils/print_material.html', context)

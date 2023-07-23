@@ -17,10 +17,10 @@ class MaterialsSerializer(serializers.HyperlinkedModelSerializer):
 class ProductsCardexSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ProductsCardex
-        fields = ['author', 'product', 'factor_number', 'number', 'description', 'operation', 'date',]
+        fields = ['row', 'author', 'product', 'factor_number', 'number', 'description', 'operation', 'date', 'status',]
 
 
 class MaterialsCardexsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = MaterialsCardex
-        fields = ['author', 'material', 'factor_number', 'number', 'description', 'operation', 'date',]
+        fields = ['row', 'author', 'material', 'factor_number', 'number', 'description', 'operation', 'date', 'status',]

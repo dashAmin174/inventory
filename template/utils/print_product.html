@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block TITLE %}
+<title>چاپ</title>
+{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'assets/css/inventory/products/add_products.css' %}">
+{% endblock %}
+{% block CONTENT %}
+<input type="hidden" name="CODE" value="{{code}}">
+{% for detail in product %}
+<input name="PRODUCT_NAME" type="hidden" value="{{ detail.product_name }}">
+<input name="PRODUCT_CODE" type="hidden" value="{{ detail.product_code }}">
+<input name="PRODUCT_COLOR" type="hidden" value="{{ detail.product_color }}">
+<input name="PRODUCT_LOCATION" type="hidden" value="{{ detail.product_location }}">
+<input name="PRODUCT_HALL" type="hidden" value="{{ detail.product_hall }}">
+<input name="PRODUCT_DATE" type="hidden" value="{{ detail.jpub }}">
+<input name="PRODUCT_UNIT" type="hidden" value="{{ detail.product_unit }}">
+{% endfor %}
+<div class="cardex" id="cardexprint"></div>
+{% block JS %}
+<script src="{% static 'assets/js/utils/print_products.js' %}"></script>
+{% endblock %}
+{% endblock %}

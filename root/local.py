@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 
 
-CSRF_TRUSTED_ORIGINS = ["https://8000-irabs175-inventory-zod12z55trx.ws-eu102.gitpod.io"]
+CSRF_TRUSTED_ORIGINS = ["https://irabs175-automatic-bassoon-rjp6j9jx5w72xw77-8000.preview.app.github.dev"]
 
 SECRET_KEY = "django-insecure-cnvj_6xqst#5dhxc1-3^cm06kd7ap81&wr8s@_#)jvju(k6w9v"
 
@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','8000-irabs175-inventory-zod12z55trx.ws-eu102.gitpod.io']
+ALLOWED_HOSTS = ['localhost','8000-irabs175-inventory-zod12z55trx.ws-eu102.gitpod.io']
 
 DATABASES = {
     "default": {

@@ -1,4 +1,7 @@
-from .extensions.jalali_converter import jalali_converter as jConvert
+from .extensions.jalali_converter import jalali_converter as jConvert, cardex_jalali_converter
+from django.db.models.signals import post_save, pre_delete
+from django.dispatch import receiver
+from django.db.models import F
 from django.db import models
 #import pandas as pd
 
@@ -34,12 +37,12 @@ class ProductsCardex(models.Model):
     date = models.DateTimeField(auto_now_add=True, verbose_name='زمان ثبت', null=True, blank=True)
     status = models.BooleanField(verbose_name='ورودی / خروجی', blank=True, null=True)
     quantity = models.PositiveIntegerField(null=True)
+    row = models.PositiveIntegerField(default=0)
 
     def jpub(self):
-        return jConvert(self.date)
+        return cardex_jalali_converter(self.date)
 
     class Meta:
-        ordering = ["-date"]
         verbose_name = 'کاردکس'
         verbose_name_plural = 'کاردکس کالاها'
 
@@ -75,11 +78,35 @@ class MaterialsCardex(models.Model):
     date = models.DateTimeField(auto_now_add=True, verbose_name='زمان ثبت', null=True, blank=True)
     status = models.BooleanField(verbose_name='ورودی / خروجی', blank=True, null=True)
     quantity = models.PositiveIntegerField(null=True)
+    row = models.PositiveIntegerField(default=0)
 
     def jpub(self):
-        return jConvert(self.date)
+        return cardex_jalali_converter(self.date)
 
     class Meta:
-        ordering = ["-date"]
         verbose_name = 'کاردکس'
         verbose_name_plural = 'کاردکس مواد اولیه'
+
+# Function to update row numbers
+def update_row_numbers(sender, instance, **kwargs):
+    if kwargs.get('created'):
+        # New record is being created
+        last_row = sender.objects.all().order_by('-row').first()
+        if last_row:
+            instance.row = last_row.row + 1
+        else:
+            instance.row = 1
+        instance.save()
+
+# Function to update row numbers after deletion
+def update_row_numbers_on_delete(sender, instance, **kwargs):
+    # Get the deleted row number
+    deleted_row_number = instance.row
+    # Update row numbers for records below the deleted row
+    sender.objects.filter(row__gt=deleted_row_number).update(row=F('row') - 1)
+
+# Connect the signals to the model
+post_save.connect(update_row_numbers, sender=ProductsCardex)
+pre_delete.connect(update_row_numbers_on_delete, sender=ProductsCardex)
+post_save.connect(update_row_numbers, sender=MaterialsCardex)
+pre_delete.connect(update_row_numbers_on_delete, sender=MaterialsCardex)

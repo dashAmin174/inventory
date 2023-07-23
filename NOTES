@@ -1,1 +1,17 @@
 /inventory/api/products?search=as
+
+$('<div>').addClass('dirrtladmin').append(
+              $('<div>').addClass('textadmin darker').append(
+                $('<p>').text(message.message),
+                $('<span>').addClass('time-right').text(message.time)
+              )
+            );
+
+  var tableContents = $(".table").prop('outerHTML');
+  var printWin = window.open('', '', 'width=794,height=1123');
+  printWin.document.write(`<html dir="rtl"><head><title>Cardex - ${page}</title>`);
+  printWin.document.write('</head><body >');
+  printWin.document.write(tableContents);
+  printWin.document.write('</body></html>');
+  printWin.document.close();
+  printWin.print();

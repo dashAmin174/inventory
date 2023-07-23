@@ -12,11 +12,10 @@
     <!-- -------کاردکس------ -->
     <div class="container-fluid"><br>
         <div class="text-center mb-1">
-            <button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button>
-            <button type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button>
+            <a href="/inventory/material_cardex_excel/{{code}}"><button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button></a>
+        <a href="/inventory/material_cardex_pdf/{{code}}"><button type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button></a>
         </div>
         <div class="cardex" id="cardexprint">
-            
             <div class="h-cardex">کاردکس کالا</div>
             {% for field in material %}
             <span>نام کالا : {{ field.material_name }}</span>
@@ -31,6 +30,7 @@
             <table class="table">
                 <thead class="table-dark">
                     <tr>
+                        <th>ردیف</th>
                         <th>تاریخ</th>
                         <th>شماره حواله/فاکتور</th>
                         <th>شرح اقدامات</th>
@@ -43,6 +43,7 @@
                 <tbody>
                     {% for data in cardex %}
                     <tr>
+                        <td>{{ data.row }}</td>
                         <td>{{ data.jpub }}</td>
                         <td>{{ data.factor_number }}</td>
                         <td>{{ data.description }}</td>

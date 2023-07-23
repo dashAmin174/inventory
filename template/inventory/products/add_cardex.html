@@ -9,12 +9,13 @@
 {% block CONTENT %}
 <input type="hidden" name="CODE" value="{{code}}">
 <div class="container-fluid cardexbody">
+            <div class="text-center mb-1">
+            <a href="/inventory/product_cardex_excel/{{code}}"><button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button></a>
+            <button onclick="print('{{code}}');" type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button>
+        </div>
     <!-- -------کاردکس------ -->
     <div class="container-fluid"><br>
-        <div class="text-center mb-1">
-            <button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button>
-            <button type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button>
-        </div>
+
         <div class="cardex" id="cardexprint">
             
             <div class="h-cardex">کاردکس کالا</div>
@@ -31,8 +32,9 @@
             <table class="table">
                 <thead class="table-dark">
                     <tr>
+                        <th>ردیف</th>
                         <th>تاریخ</th>
-                        <th>شماره حواله/فاکتور</th>
+                        <th>شماره فاکتور</th>
                         <th>شرح اقدامات</th>
                         <th>ورودی</th>
                         <th>خروجی</th>
@@ -43,6 +45,7 @@
                 <tbody>
                     {% for data in cardex %}
                     <tr>
+                        <td>{{ data.row }}</td>
                         <td>{{ data.jpub }}</td>
                         <td>{{ data.factor_number }}</td>
                         <td>{{ data.description }}</td>
@@ -57,8 +60,7 @@
                 </tbody>
             </table>
         </div><br>
-    </div>
-
+    </div><!--@@@@@@@@-->
     <!-- ----------------- -->
     <div class="container-fluid">
         <div class="row">
@@ -66,27 +68,31 @@
                 <div>
                     {% for detail in product %}
                     <div class="col-12">
-                        <input class="form-control" type="text" placeholder="{{ detail.product_name }}"
+                        <input class="form-control PRODUCT_NAME" value="{{ detail.product_name }}" type="text" placeholder="{{ detail.product_name }}"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control" type="text" placeholder="{{ detail.product_code }}"
+                        <input class="form-control PRODUCT_CODE" value="{{ detail.product_code }}"  type="text" placeholder="{{ detail.product_code }}"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control" type="text" placeholder="{{ detail.product_color }}"
+                        <input class="form-control PRODUCT_COLOR" value="{{ detail.product_color }}"  type="text" placeholder="{{ detail.product_color }}"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control" type="text" placeholder="{{ detail.product_location }}"
+                        <input class="form-control PRODUCT_LOCATION" value="{{ detail.product_location }}"  type="text" placeholder="{{ detail.product_location }}"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control" type="text" placeholder="{{ detail.product_hall }}"
+                        <input class="form-control PRODUCT_HALL" value="{{ detail.product_hall }}"  type="text" placeholder="{{ detail.product_hall }}"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control" type="text" placeholder="{{ detail.product_unit }}"
+                        <input class="form-control PRODUCT_DATE" value="{{ detail.jpub }}"  type="text" placeholder="{{ detail.jpub }}"
+                            aria-label="default input example" disabled>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control PRODUCT_UNIT" value="{{ detail.product_unit }}"  type="text" placeholder="{{ detail.product_unit }}"
                             aria-label="default input example" disabled>
                     </div><br>
                     {% endfor %}

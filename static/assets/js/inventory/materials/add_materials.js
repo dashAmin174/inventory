@@ -2,9 +2,9 @@ $(document).ready(function() {
   console.log("+> Hi!");
     });// End ready
 $(".do0").click(function() {
-  let productName = $("input[placeholder='نام ماده اولیه']").val();
-  let productCode = $("input[placeholder='کد ماده اولیه']").val();
-  let productColor = $("input[placeholder='رنگ ماده اولیه']").val();
+  let productName = $(".productName").val();
+  let productCode = $(".productCode").val();
+  let productColor = $(".productColor").val();
   let productLocation = $("select:eq(0)").find(":selected").text();
   let productHall = $("select:eq(1)").find(":selected").text();
   let productUnit = $("select:eq(2)").find(":selected").text();

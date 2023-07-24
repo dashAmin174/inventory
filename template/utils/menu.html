@@ -7,12 +7,13 @@
 <body>
   <nav class="ss-menu ">
     <ul>
-      <li><a href="#1"><i class="bi bi-speedometer2"></i>داشبورد</a></li>
-      <li><a href="#1"><i class="bi bi-folder-plus"></i> ارشیو انبار کالا</a></li>
-      <li><a href="#1"><i class="bi bi-card-checklist"></i>ارشیو انبار مواد اولیه</a></li>
-      <li><a href="#1"><i class="bi bi-files"></i>افزودن انبار جدید</a></li>
-      <li><a href="#1"><i class="bi bi-person-rolodex"></i>مشاهده وضعیت همکاران</a></li>
-      <li><a href="#1"><span class="ss-badge">!</span> <i class="bi bi-chat-dots"></i> ارسال پیام به همکاران</a></li>
+      <li><a href="{% url 'dashboard' %}"><i class="bi bi-speedometer2"></i>داشبورد</a></li>
+      <li><a href="{% url 'products' %}"><i class="bi bi-folder-plus"></i> ارشیو انبار کالا</a></li>
+      <li><a href="{% url 'materials' %}"><i class="bi bi-card-checklist"></i>ارشیو انبار مواد اولیه</a></li>
+      <li><a href="{% url 'add_products' %}"><i class="bi bi-files"></i>افزودن کالا</a></li>
+      <li><a href="{% url 'add_materials' %}"><i class="bi bi-files"></i>افزودن ماده اولیه</a></li>
+      <li><a href="{% url 'accounts' %}"><i class="bi bi-person-rolodex"></i>مشاهده وضعیت همکاران</a></li>
+      <li><a href="#"><span class="ss-badge">!</span> <i class="bi bi-chat-dots"></i> ارسال پیام به همکاران</a></li>
       <li><a href="{% url 'logout' %}"><i class="fas fa-sign-in-alt"></i>خروج از انبار</a></li>
     </ul>
   </nav>

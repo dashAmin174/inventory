@@ -37,7 +37,7 @@ class MaterialsViewSet(generics.ListCreateAPIView):
 class ProductsCardexViewSet(generics.ListCreateAPIView):
     queryset = ProductsCardex.objects.all()
     serializer_class = ProductsCardexSerializer
-    ordering_fields = ['row', 'author', 'product', 'factor_number', 'number', 'description', 'operation', 'date', 'status',]
+    ordering_fields = ['row', 'author', 'product', 'factor_number', 'number', 'description', 'operation', 'date', 'status', 'quantity']
     search_fields = ['product', 'factor_number',]
     
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
@@ -46,7 +46,7 @@ class ProductsCardexViewSet(generics.ListCreateAPIView):
 class MaterialsCardexsViewSet(generics.ListCreateAPIView):
     queryset = MaterialsCardex.objects.all()
     serializer_class = MaterialsCardexsSerializer
-    ordering_fields = ['row', 'author', 'material', 'factor_number', 'number', 'description', 'operation', 'date', 'status',]
+    ordering_fields = ['row', 'author', 'material', 'factor_number', 'number', 'description', 'operation', 'date', 'status', 'quantity']
     search_fields = ['material', 'factor_number',]
     
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
@@ -358,18 +358,20 @@ def material_cardex_export_to_excel(request, code):
 
 @login_required
 def product_cardex_export_to_pdf(request, code):
-    product = Products.objects.filter(product_code = code)
-    return render(request, 'utils/print_product.html', context)
+    product = Products.objects.filter(product_code = code).order_by("product_date")
     if product.exists():
         cardex = ProductsCardex.objects.filter(product = code).order_by("date")
         context = {'code' : code, 'product': product, 'cardex': cardex}
-        return render(request, "inventory/products/add_cardex.html", context)
+        return render(request, "utils/print_product.html", context)
     else:
         return render(request, "dashboard/dashboard.html")
 
 @login_required
 def material_cardex_export_to_pdf(request, code):
-    cardex = MaterialsCardex.objects.filter(material = code).order_by("date")
-    material = Materials.objects.filter(material_code = code)
-    context = {'code' : code, 'material': material, 'cardex': cardex}
-    return render(request, 'utils/print_material.html', context)
+    material = Materials.objects.filter(material_code = code).order_by("material_date")
+    if material.exists():
+        cardex = MaterialsCardex.objects.filter(material = code).order_by("date")
+        context = {'code' : code, 'material': material, 'cardex': cardex}
+        return render(request, "utils/print_material.html", context)
+    else:
+        return render(request, "dashboard/dashboard.html")

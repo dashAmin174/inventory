@@ -1,7 +1,0 @@
-var printWin = window.open('', '', 'width=1000,height=1000');
-printWin.document.write(`<html dir="rtl"><head><title>${page} Cardex</title>`);
-printWin.document.write('</head><body >');
-printWin.document.write(printContents);
-printWin.document.write('</body></html>');
-printWin.document.close();
-printWin.print();

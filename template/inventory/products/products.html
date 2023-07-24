@@ -7,22 +7,23 @@
 <link rel="stylesheet" href="{% static 'assets/css/inventory/products/products.css' %}">
 {% endblock %}
 {% block CONTENT %}
+<input type="hidden" name="CODE" value="{{code}}">
 <div class="container-fluid bodyx">
     <!-- ----منو بار---- -->
-    <div>
+    <div >
         <div class="row">
             <div class="menubar">
                 <div class="row">
-                    <div class="col-3"> <a class="navbar-brand wttc col-3">سلام فرید غنی زاده</a>
+
+                    <div class="col-3 dirrr"> <a class="navbar-brand wttc col-3">سلام {{ user.first_name }} {{ user.last_name }}</a>
                     </div>
                     <div class="col-9">
                         <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="جستوجو کنید"
+                            <input id="search_input" class="form-control me-2 rSearch" placeholder="جستوجو کنید"
                                 aria-label="Search" />
-                            <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                            <button id="search_product" class="btn btn-outline-success mSearch" type="submit"><i class="bi bi-search"></i></button>
                         </form>
                     </div>
-                </div>
             </div>
         </div>
     </div><br><br><br>

@@ -7,10 +7,11 @@
 <link rel="stylesheet" href="{% static 'assets/css/inventory/products/add_products.css' %}">
 {% endblock %}
 {% block CONTENT %}
+<input type="hidden" name="CODE" value="{{code}}">
 <div class="container-fluid cardexbody">
             <div class="text-center mb-1">
             <a href="/inventory/product_cardex_excel/{{code}}"><button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button></a>
-            <button onclick="print('{{code}}');" type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button>
+            <a href="/inventory/product_cardex_pdf/{{code}}"><button type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button></a>
         </div>
     <!-- -------کاردکس------ -->
     <div class="container-fluid"><br>

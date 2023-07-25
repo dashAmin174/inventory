@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block TITLE %}
+<title>چاپ {% for item in material %}{{ item.material_name }} {{ item.material_code }}{% endfor %}</title>
+{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'assets/css/inventory/products/add_products.css' %}">
+{% endblock %}
+{% block CONTENT %}
+<input type="hidden" name="CODE" value="{{code}}">
+{% for detail in material %}
+<input name="PRODUCT_NAME" type="hidden" value="{{ detail.material_name }}">
+<input name="PRODUCT_CODE" type="hidden" value="{{ detail.material_code }}">
+<input name="PRODUCT_COLOR" type="hidden" value="{{ detail.material_color }}">
+<input name="PRODUCT_LOCATION" type="hidden" value="{{ detail.material_location }}">
+<input name="PRODUCT_HALL" type="hidden" value="{{ detail.material_hall }}">
+<input name="PRODUCT_DATE" type="hidden" value="{{ detail.jpub }}">
+<input name="PRODUCT_UNIT" type="hidden" value="{{ detail.material_unit }}">
+{% endfor %}
+<div class="cardex cardexbody" id="cardexprint"></div>
+{% block JS %}
+<script src="https://unpkg.com/jalali-moment/dist/jalali-moment.browser.js"></script>
+<script src="{% static 'assets/js/utils/print_materials.js' %}"></script>
+{% endblock %}
+{% endblock %}

@@ -3,7 +3,8 @@ from .views import (inventory, products, add_products, materials, add_materials,
     add_products_cardex, add_materials_cardex, ProductsViewSet, MaterialsViewSet,
     ProductsCardexViewSet, MaterialsCardexsViewSet, product_cardex_export_to_excel,
     material_cardex_export_to_excel, product_cardex_export_to_pdf, material_cardex_export_to_pdf)
-from .export import (product_list_export_to_excel, material_list_export_to_excel)
+from .export import (product_list_export_to_excel, material_list_export_to_excel,
+    product_list_pdf, material_list_pdf)
 from django.urls import path
 
 
@@ -23,6 +24,8 @@ urlpatterns = [
     path("products/<code>", add_products_cardex, name = "products_cardex"),
     path('api/products', ProductsViewSet.as_view(), name = 'products-api'),
     path("js_add_materials", js_add_materials, name = "js_add_materials"),
+    path("material_list_pdf", material_list_pdf, name = "Materials_list"),
+    path("product_list_pdf", product_list_pdf, name = "products_list"),
     path("js_add_products", js_add_products, name = "js_add_products"),
     path("add_materials/", add_materials, name = "add_materials"),
     path("add_products/", add_products, name = "add_products"),

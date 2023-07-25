@@ -17,6 +17,7 @@ class Products(models.Model):
     product_date = models.DateTimeField(auto_now_add=True, verbose_name='زمان دقیق ثبت', null=True, blank=True)
     is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال', blank=False, null=False)
     is_available = models.BooleanField(default=True, verbose_name='موجودی / عدم موجودی', blank=False, null=False)
+    row = models.PositiveIntegerField(default=0)
 
     objects = models.Manager()
 
@@ -61,6 +62,7 @@ class Materials(models.Model):
     material_date = models.DateTimeField(auto_now_add=True, verbose_name='زمان دقیق ثبت', null=True, blank=True)
     is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال', blank=False, null=False)
     is_available = models.BooleanField(default=True, verbose_name='موجودی / عدم موجودی', blank=False, null=False)
+    row = models.PositiveIntegerField(default=0)
 
     objects = models.Manager()
     
@@ -115,3 +117,7 @@ post_save.connect(update_row_numbers, sender=ProductsCardex)
 pre_delete.connect(update_row_numbers_on_delete, sender=ProductsCardex)
 post_save.connect(update_row_numbers, sender=MaterialsCardex)
 pre_delete.connect(update_row_numbers_on_delete, sender=MaterialsCardex)
+post_save.connect(update_row_numbers, sender=Products)
+pre_delete.connect(update_row_numbers_on_delete, sender=Products)
+post_save.connect(update_row_numbers, sender=Materials)
+pre_delete.connect(update_row_numbers_on_delete, sender=Materials)

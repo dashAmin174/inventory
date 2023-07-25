@@ -12,6 +12,7 @@ from django.shortcuts import render
 from reportlab.lib import colors
 from root.local import BASE_DIR
 from openpyxl import Workbook
+import pandas as pd
 import os
 
 
@@ -37,7 +38,7 @@ class MaterialsViewSet(generics.ListCreateAPIView):
 class ProductsCardexViewSet(generics.ListCreateAPIView):
     queryset = ProductsCardex.objects.all()
     serializer_class = ProductsCardexSerializer
-    ordering_fields = ['row', 'author', 'product', 'factor_number', 'number', 'description', 'operation', 'date', 'status', 'quantity']
+    ordering_fields = ['row', 'author', 'product', 'factor_number', 'number', 'description', 'operation', 'date', 'status', 'quantity', 'factor_row']
     search_fields = ['product', 'factor_number',]
     
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
@@ -46,7 +47,7 @@ class ProductsCardexViewSet(generics.ListCreateAPIView):
 class MaterialsCardexsViewSet(generics.ListCreateAPIView):
     queryset = MaterialsCardex.objects.all()
     serializer_class = MaterialsCardexsSerializer
-    ordering_fields = ['row', 'author', 'material', 'factor_number', 'number', 'description', 'operation', 'date', 'status', 'quantity']
+    ordering_fields = ['row', 'author', 'material', 'factor_number', 'number', 'description', 'operation', 'date', 'status', 'quantity', 'factor_row']
     search_fields = ['material', 'factor_number',]
     
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
@@ -160,13 +161,28 @@ def js_update_products(request):
                     if description:
                         if product_code:
                             if Products.objects.filter(product_code = product_code).exists():
-                                if ProductsCardex.objects.filter(product = product_code, factor_number = factor_number).exists():
-                                    return JsonResponse({'status':'کادرکس با این شماره فاکتور هم اکنون تعریف شده', 'success': False})
-                                else:
-                                    full_name = request.user.first_name + " " + request.user.last_name
-                                    product = Products.objects.filter(product_code = product_code).first()
-                                    if operation == "ورودی":
-                                        total = product.product_quantity + int(number)
+                                full_name = request.user.first_name + " " + request.user.last_name
+                                product = Products.objects.filter(product_code = product_code).first()
+                                if operation == "ورودی":
+                                    total = product.product_quantity + int(number)
+                                    product.product_quantity = total
+                                    product.save()
+                                    ProductsCardex.objects.create(
+                                        author = full_name,
+                                        product = product_code,
+                                        factor_number = factor_number,
+                                        number = number,
+                                        description = description,
+                                        operation = operation,
+                                        status = True,
+                                        quantity = product.product_quantity,
+                                    )
+                                    return JsonResponse({'status': 'کاردکس با موفقیت ایجاد و موجودی به روز شد', 'success': True})
+                                elif operation == "خروجی":
+                                    if product.product_quantity == 0:
+                                        return JsonResponse({'status':'محصول مورد نظر فاقد موجودی است', 'success': False})
+                                    else:
+                                        total = product.product_quantity - int(number)
                                         product.product_quantity = total
                                         product.save()
                                         ProductsCardex.objects.create(
@@ -176,28 +192,10 @@ def js_update_products(request):
                                             number = number,
                                             description = description,
                                             operation = operation,
-                                            status = True,
+                                            status = False,
                                             quantity = product.product_quantity,
                                         )
-                                        return JsonResponse({'status': 'کاردکس با موفقیت ایجاد و موجودی به روز شد', 'success': True})
-                                    elif operation == "خروجی":
-                                        if product.product_quantity == 0:
-                                            return JsonResponse({'status':'محصول مورد نظر فاقد موجودی است', 'success': False})
-                                        else:
-                                            total = product.product_quantity - int(number)
-                                            product.product_quantity = total
-                                            product.save()
-                                            ProductsCardex.objects.create(
-                                                author = full_name,
-                                                product = product_code,
-                                                factor_number = factor_number,
-                                                number = number,
-                                                description = description,
-                                                operation = operation,
-                                                status = False,
-                                                quantity = product.product_quantity,
-                                            )
-                                            return JsonResponse({'status': 'کاردکس با موفقیت ایجاد شد و موجودی به روز شد', 'success': True})
+                                        return JsonResponse({'status': 'کاردکس با موفقیت ایجاد شد و موجودی به روز شد', 'success': True})
                             else:
                                 return JsonResponse({'status':'ابتدا باید محصول را تعریف کنید', 'success': False})
                         else:
@@ -228,13 +226,28 @@ def js_update_materials(request):
                     if description:
                         if material_code:
                             if Materials.objects.filter(material_code = material_code).exists():
-                                if MaterialsCardex.objects.filter(material = material_code, factor_number = factor_number).exists():
-                                    return JsonResponse({'status':'کادرکس با این شماره فاکتور هم اکنون تعریف شده', 'success': False})
-                                else:
-                                    full_name = request.user.first_name + " " + request.user.last_name
-                                    material = Materials.objects.filter(material_code = material_code).first()
-                                    if operation == "ورودی":
-                                        total = material.material_quantity + int(number)
+                                full_name = request.user.first_name + " " + request.user.last_name
+                                material = Materials.objects.filter(material_code = material_code).first()
+                                if operation == "ورودی":
+                                    total = material.material_quantity + int(number)
+                                    material.material_quantity = total
+                                    material.save()
+                                    MaterialsCardex.objects.create(
+                                        author = full_name,
+                                        material = material_code,
+                                        factor_number = factor_number,
+                                        number = number,
+                                        description = description,
+                                        operation = operation,
+                                        status = True,
+                                        quantity = material.material_quantity,
+                                    )
+                                    return JsonResponse({'status': 'کاردکس با موفقیت ایجاد و موجودی به روز شد', 'success': True})
+                                elif operation == "خروجی":
+                                    if material.material_quantity == 0:
+                                        return JsonResponse({'status':'محصول مورد نظر فاقد موجودی است', 'success': False})
+                                    else:
+                                        total = material.material_quantity - int(number)
                                         material.material_quantity = total
                                         material.save()
                                         MaterialsCardex.objects.create(
@@ -244,28 +257,10 @@ def js_update_materials(request):
                                             number = number,
                                             description = description,
                                             operation = operation,
-                                            status = True,
+                                            status = False,
                                             quantity = material.material_quantity,
                                         )
-                                        return JsonResponse({'status': 'کاردکس با موفقیت ایجاد و موجودی به روز شد', 'success': True})
-                                    elif operation == "خروجی":
-                                        if material.material_quantity == 0:
-                                            return JsonResponse({'status':'محصول مورد نظر فاقد موجودی است', 'success': False})
-                                        else:
-                                            total = material.material_quantity - int(number)
-                                            material.material_quantity = total
-                                            material.save()
-                                            MaterialsCardex.objects.create(
-                                                author = full_name,
-                                                material = material_code,
-                                                factor_number = factor_number,
-                                                number = number,
-                                                description = description,
-                                                operation = operation,
-                                                status = False,
-                                                quantity = material.material_quantity,
-                                            )
-                                            return JsonResponse({'status': 'کاردکس با موفقیت ایجاد شد و موجودی به روز شد', 'success': True})
+                                        return JsonResponse({'status': 'کاردکس با موفقیت ایجاد شد و موجودی به روز شد', 'success': True})
                             else:
                                 return JsonResponse({'status':'ابتدا باید محصول را تعریف کنید', 'success': False})
                         else:

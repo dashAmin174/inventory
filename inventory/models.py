@@ -3,7 +3,6 @@ from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from django.db.models import F
 from django.db import models
-#import pandas as pd
 
 
 class Products(models.Model):
@@ -19,6 +18,8 @@ class Products(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال', blank=False, null=False)
     is_available = models.BooleanField(default=True, verbose_name='موجودی / عدم موجودی', blank=False, null=False)
 
+    objects = models.Manager()
+
     def jpub(self):
         return jConvert(self.product_date)
 
@@ -31,6 +32,7 @@ class ProductsCardex(models.Model):
     author = models.CharField(max_length=40, verbose_name='اپراتور ثبت',null=False, blank=False )
     product = models.CharField(max_length=50, verbose_name='کالا',null=False, blank=False )
     factor_number = models.CharField(max_length=50, verbose_name='شماره فاکتور',null=False, blank=False )
+    factor_row = models.CharField(max_length=50, verbose_name='ردیف فاکتور',null=False, blank=False )
     number = models.PositiveIntegerField(verbose_name='تعداد', null=True)
     description = models.CharField(max_length=300, verbose_name='شرح عملیات',null=False, blank=False )
     operation = models.CharField(max_length=20, verbose_name='عملیات',null=False, blank=False )
@@ -60,6 +62,8 @@ class Materials(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال', blank=False, null=False)
     is_available = models.BooleanField(default=True, verbose_name='موجودی / عدم موجودی', blank=False, null=False)
 
+    objects = models.Manager()
+    
     def jpub(self):
         return jConvert(self.material_date)
 
@@ -72,6 +76,7 @@ class MaterialsCardex(models.Model):
     author = models.CharField(max_length=40, verbose_name='اپراتور ثبت',null=False, blank=False )
     material = models.CharField(max_length=50, verbose_name='ماده اولیه',null=False, blank=False )
     factor_number = models.CharField(max_length=50, verbose_name='شماره فاکتور',null=False, blank=False )
+    factor_row = models.CharField(max_length=50, verbose_name='ردیف فاکتور',null=False, blank=False )
     number = models.PositiveIntegerField(verbose_name='تعداد', null=True)
     description = models.CharField(max_length=300, verbose_name='شرح عملیات',null=False, blank=False )
     operation = models.CharField(max_length=20, verbose_name='عملیات',null=False, blank=False )

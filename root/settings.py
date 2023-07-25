@@ -2,6 +2,7 @@ from .local import *
 
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -9,9 +10,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'rest_framework',
+    'import_export',
     "dashboard",
     "account",
     "inventory",
+    "chat",
 ]
 
 # LOGIN REDIRECT URL
@@ -80,6 +83,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "root.wsgi.application"
+
+ASGI_APPLICATION = "root.asgi.application"
 
 AUTH_PASSWORD_VALIDATORS = [
     {

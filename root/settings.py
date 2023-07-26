@@ -2,6 +2,7 @@ from .local import *
 
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -9,14 +10,23 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'rest_framework',
+    'import_export',
     "dashboard",
     "account",
     "inventory",
+    "chat",
 ]
 
 # LOGIN REDIRECT URL
 LOGIN_REDIRECT_URL = '/'
 
+SESSION_EXPIRE_SECONDS = 650
+
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
+SESSION_TIMEOUT_REDIRECT = '/'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 
 AUTHENTICATION_BACKENDS = [
     'account.backend.EmailPhoneCodeMelliBackend',
@@ -50,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
 
 ROOT_URLCONF = "root.urls"
@@ -72,6 +83,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "root.wsgi.application"
+
+ASGI_APPLICATION = "root.asgi.application"
 
 AUTH_PASSWORD_VALIDATORS = [
     {

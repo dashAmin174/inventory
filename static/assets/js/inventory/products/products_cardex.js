@@ -1,12 +1,9 @@
-$(document).ready(function() {
-  console.log('+> hi!');
-});// End ready
 $(".do1").click(function() {
   let productCode = $("input[name='CODE']").val();
   let factorNumber = $("input[placeholder='شماره حواله / فاکتور']").val();
   let number = $("input[placeholder='تعداد']").val();
   let description = $("input[placeholder='شرح اقدامات']").val();
-  let operation = $("select:eq(3)").find(":selected").text();
+  let operation = $("select:eq(0)").find(":selected").text();
   let data = {
       'product_code' : productCode,
       'factor_number' : factorNumber,

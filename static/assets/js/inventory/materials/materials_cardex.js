@@ -6,7 +6,7 @@ $(".do1").click(function() {
   let factorNumber = $("input[placeholder='شماره حواله / فاکتور']").val();
   let number = $("input[placeholder='تعداد']").val();
   let description = $("input[placeholder='شرح اقدامات']").val();
-  let operation = $("select:eq(3)").find(":selected").text();
+  let operation = $("select:eq(0)").find(":selected").text();
   let data = {
       'material_code' : productCode,
       'factor_number' : factorNumber,

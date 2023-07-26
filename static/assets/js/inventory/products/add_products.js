@@ -2,9 +2,9 @@ $(document).ready(function() {
     console.log('+> Hi!');
 });// End ready
 $(".do0").click(function() {
-    let productName = $("input[placeholder='نام محصول']").val();
-    let productCode = $("input[placeholder='کد محصول']").val();
-    let productColor = $("input[placeholder='رنگ محصول']").val();
+    let productName = $(".productName").val();
+    let productCode = $(".productCode").val();
+    let productColor = $(".productColor").val();
     let productLocation = $("select:eq(0)").find(":selected").text();
     let productHall = $("select:eq(1)").find(":selected").text();
     let productUnit = $("select:eq(2)").find(":selected").text();
@@ -35,7 +35,7 @@ $(".do0").click(function() {
                 showConfirmButton: false,
                 timer: 2000,
               });
-              window.location.href = `/inventory/products/${productCode}`;
+              window.location.href = `/inventory/products/${product_location}/${productHall}/${productCode}/${productColor}`;
             }
           },
           error: function(xhr, status, error) {

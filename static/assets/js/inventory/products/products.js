@@ -1,3 +1,3 @@
-function edit_product(code){
-    window.location.href = `/inventory/products/${code}`;
+function edit_product(location, hall, code, color){
+    window.location.href = `/inventory/products/${location}^${hall}^${code}^${color}`;
 }// End function edit_product

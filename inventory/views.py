@@ -296,8 +296,11 @@ def add_products(request):
     return render(request, "inventory/products/add_products.html")
 
 @login_required
-def add_products_cardex(request, code):
-    product = Products.objects.filter(product_code = code)
+def add_products_cardex(request, inventory, code, color):
+    print(inventory)
+    print(code)
+    print(color)
+    product = Products.objects.filter(product_location = inventory, product_code = code, product_color = color,)
     if product.exists():
         cardex = ProductsCardex.objects.filter(product = code).order_by('-date')
         context = {'code' : code, 'product' : product, 'cardex' : cardex}
@@ -306,8 +309,8 @@ def add_products_cardex(request, code):
         return render(request, "dashboard/dashboard.html")
 
 @login_required
-def add_materials_cardex(request, code):
-    material = Materials.objects.filter(material_code = code)
+def add_materials_cardex(request, inventory, code, color):
+    material = Materials.objects.filter(material_location = inventory, material_code = code, material_color = color,)
     if material.exists():
         cardex = MaterialsCardex.objects.filter(material = code).order_by('-date')
         context = {'code' : code, 'material' : material, 'cardex' : cardex}

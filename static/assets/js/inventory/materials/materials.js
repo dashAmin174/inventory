@@ -1,3 +1,3 @@
-function edit_material(code){
-    window.location.href = `/inventory/materials/${code}`;
+function edit_material(code, color, inventory){
+    window.location.href = `/inventory/materials/${inventory}/${code}/${color}`;
 }// End function edit_material
